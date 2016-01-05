@@ -43,16 +43,16 @@ def proba_ouverture(alpha, x, beta):
 #Fonction modèle Hodgkin Huxley
 def hh(Tmax, I=1, dt=0.010, C=1.):
     for t in range(1,int(Tmax/dt)):
-		#on calcule les proba d'ouverture des canaux
+	#on calcule les proba d'ouverture des canaux
         dpn = dt * proba_ouverture(alpha_n(V[t-1]), n[t-1], beta_n(V[t-1]))
         dpm = dt * proba_ouverture(alpha_m(V[t-1]), m[t-1], beta_m(V[t-1]))
         dph = dt * proba_ouverture(alpha_h(V[t-1]), h[t-1], beta_h(V[t-1]))
-		#on calcule le changement de concentration en Na et K
+	#on calcule le changement de concentration en Na et K
         dK = (gK * ((n[t-1])**4.) * (V[t-1] - EK))
         dNa = (gNa * (m[t-1])**3. * (h[t-1]) * (V[t-1]-ENa))
         K.append(dK)
         Na.append(dNa)
-		#Equation du modèle de Hodgkin&Huxley
+	#Equation du modèle de Hodgkin&Huxley
         dV = dt * (I - ((gL * (V[t-1] - EL)) + K[t-1] + Na[t-1]))/C
         n.append(n[t-1] + dpn)
         m.append(m[t-1] + dpm)
